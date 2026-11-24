@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TAEKWONDO LIGUE DE DIOURBEL</title>
+<style>
+:root{--navy:#0b1d35;--red:#c5163d;--blue:#075da9;--gold:#d5b747;--line:#d8dee7;--ink:#17263b}
+*{box-sizing:border-box}body{margin:0;background:#f1f4f8;color:var(--ink);font:16px system-ui,-apple-system,Segoe UI,sans-serif}
+header{background:var(--navy);color:white;padding:18px 16px;border-bottom:4px solid var(--gold);font-size:clamp(21px,4vw,29px);font-weight:900;letter-spacing:.05em}
+header span{color:#e4c65b}header small{display:block;color:#c5d0df;font-size:11px;letter-spacing:.13em;font-weight:600}
+main{max-width:1050px;margin:15px auto;padding:0 10px}.panel{background:#fff;border:1px solid #e0e5ec;border-radius:16px;padding:15px;margin-bottom:13px;box-shadow:0 3px 12px #0b1d3508}
+h2{font-size:clamp(17px,3vw,21px);margin:0 0 14px}.top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+input,select,button{font:inherit;border:1px solid #cbd4df;border-radius:10px;padding:10px;background:white;color:var(--ink)}button{cursor:pointer;font-weight:800}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:0}.athlete{min-width:0;padding:10px 9px}.athlete:first-child{border-right:2px solid #cbd3de}.athlete:last-child{border-left:0}
+.athlete h3{text-align:center;margin:0 0 5px;font-size:clamp(16px,3vw,20px)}.red{color:var(--red)}.blue{color:var(--blue)}
+.score{text-align:center;font-size:clamp(32px,6vw,43px);font-weight:950;font-variant-numeric:tabular-nums;margin:5px 0 13px}
+.adjust{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.adjust button{height:66px;border:0;border-radius:13px;color:#fff;font-size:clamp(19px,4vw,24px);font-weight:950;box-shadow:0 3px 0 #0002;touch-action:manipulation}
+.red .adjust button{background:var(--red)}.blue .adjust button{background:var(--blue)}
+.adjust button:active{transform:scale(.97);filter:brightness(.9)}
+.criterion{padding:12px 0;border-top:1px solid var(--line)}.criterion:first-child{border-top:0}
+.criterion strong{display:block;margin:0 0 9px;font-size:16px}
+.choices{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.choices button{min-height:47px;padding:7px 2px;background:#eef0f4;border:1px solid #e1e5eb;color:#647184;font-size:14px}
+.choices .selR{background:var(--red);color:#fff;border-color:var(--red)}.choices .selB{background:var(--blue);color:#fff;border-color:var(--blue)}
+.totals{display:grid;grid-template-columns:1fr 1fr;text-align:center;border-top:1px solid var(--line);padding-top:12px;margin-top:12px}
+.totals>div:first-child{border-right:1px solid var(--line)}.total{font-size:25px;font-weight:950}
+.actions{display:grid;gap:9px;margin-top:13px}.actions button{width:100%;min-height:54px}.green{background:#16865a;color:#fff;border-color:#16865a}.dark{background:#657180;color:#fff;border-color:#657180}
+.hide{display:none!important}.muted{font-size:13px;color:#6b7788}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px}.cards input{width:100%;margin-top:5px}
+table{width:100%;border-collapse:collapse}td,th{padding:8px;border-bottom:1px solid #e8edf2;text-align:center}
+@media(min-width:700px){.athlete{padding:16px 22px}.adjust button{height:76px;font-size:25px}.choices{grid-template-columns:repeat(8,minmax(0,1fr))}.choices button{min-height:50px}}
+@media(max-width:380px){.athlete{padding:8px 5px}.adjust{gap:6px}.adjust button{height:60px;font-size:18px}.choices{gap:4px}.choices button{font-size:12px;min-height:43px}}
+</style>
+</head>
+<body>
+<header>TAEKWONDO<br><span>LIGUE DE DIOURBEL</span><small>SYSTÈME DE NOTATION POOMSAE · FRANÇAIS / العربية</small></header>
+<main>
+<div class="panel top"><b>Arbitrage & administration / التحكيم والإدارة</b><div><select id="mode"><option value="judge">Espace juge / الحكم</option><option value="admin">Administration / الإدارة</option></select> <select id="judge"><option>J1</option><option>J2</option><option>J3</option><option>J4</option><option>J5</option></select> <select id="round"><option>P1</option><option>P2</option></select></div></div>
+<section id="judgeView">
+<div class="panel"><h2>Combat / المواجهة</h2><div class="cols"><label class="red">🔴 Rouge<input id="redName" value="ATHLÈTE ROUGE" style="display:block;width:100%;margin-top:5px"></label><label class="blue">🔵 Bleu<input id="blueName" value="ATHLÈTE BLEU" style="display:block;width:100%;margin-top:5px"></label></div></div>
+<div class="panel"><h2>1. PRÉCISION / 4.000 — الدقة</h2><div class="cols">
+<div class="athlete red"><h3>🔴 ROUGE</h3><div class="score" id="rA">4.000</div><div class="adjust"><button onclick="adjust('ra',.1)">+0.1</button><button onclick="adjust('ra',-.1)">−0.1</button><button onclick="adjust('ra',.3)">+0.3</button><button onclick="adjust('ra',-.3)">−0.3</button></div></div>
+<div class="athlete blue"><h3>🔵 BLEU</h3><div class="score" id="bA">4.000</div><div class="adjust"><button onclick="adjust('ba',.1)">+0.1</button><button onclick="adjust('ba',-.1)">−0.1</button><button onclick="adjust('ba',.3)">+0.3</button><button onclick="adjust('ba',-.3)">−0.3</button></div></div>
+</div></div>
+<div class="panel"><h2>2. PRÉSENTATION / 6.000 — العرض</h2><div id="criteria"></div><div class="totals"><div>🔴 Rouge<div class="total red" id="rP">6.000</div></div><div>🔵 Bleu<div class="total blue" id="bP">6.000</div></div></div></div>
+<div class="panel"><h2>3. TOTAL DU JUGE / مجموع الحكم</h2><div class="totals"><div>🔴 Rouge<div class="total red" id="rT">10.000</div></div><div>🔵 Bleu<div class="total blue" id="bT">10.000</div></div></div><div class="actions"><button class="dark" onclick="resetScores()">Réinitialiser tous les scores / إعادة ضبط النقاط</button><button class="green" onclick="sendScore()">Envoyer la note / إرسال النتيجة</button><button class="dark" onclick="alert('Retour / رجوع')">Retour / رجوع</button></div><p id="status" class="muted">En attente / بانتظار الاعتماد</p></div>
+</section>
+<section id="adminView" class="hide">
+<div class="panel"><h2>Gestion des juges / إدارة الحكام</h2><p class="muted">Nom du juge et code secret de 1 à 4 chiffres.</p><div class="cards" id="judgeCards"></div><button class="dark" onclick="saveJudges()">Enregistrer / حفظ</button></div>
+<div class="panel"><h2>Connexion du juge / دخول الحكم</h2><div class="cols"><label>Juge<select id="joinJ" style="width:100%"><option>J1</option><option>J2</option><option>J3</option><option>J4</option><option>J5</option></select></label><label>Code<input id="pin" maxlength="4" inputmode="numeric" style="width:100%"></label></div><button onclick="join()">Se connecter / دخول</button><p id="joinStatus" class="muted"></p><p class="muted">La synchronisation entre plusieurs appareils nécessite un serveur partagé. Cette version reste locale.</p></div>
+<div class="panel"><h2>Écran des résultats / شاشة النتائج</h2><div class="cols" style="margin-bottom:12px"><div class="red"><b id="adminRedName">🔴 ATHLÈTE ROUGE</b></div><div class="blue"><b id="adminBlueName">🔵 ATHLÈTE BLEU</b></div></div><div style="overflow:auto"><table><thead><tr><th>Juge</th><th>Poomsae</th><th>Rouge</th><th>Bleu</th><th>État</th></tr></thead><tbody id="rows"></tbody></table></div><div class="totals"><div>Rouge<div class="total red" id="fR">—</div></div><div>Bleu<div class="total blue" id="fB">—</div></div></div><p id="winner" class="muted">En attente des notes.</p><p class="muted">Calcul : pour chaque Poomsae, on retire la note la plus haute et la plus basse parmi les 5 juges, puis on calcule la moyenne des 3 restantes. Le total P1 + P2 détermine le vainqueur.</p></div>
+</section><p class="muted" style="text-align:center">Prototype — données locales à cet appareil uniquement.</p>
+</main>
+<script>
+const $=id=>document.getElementById(id),KEY='diourbel_scores_v4',JK='diourbel_judges_v4',MK='diourbel_match_v1';let db=JSON.parse(localStorage.getItem(KEY)||'{}'),match=JSON.parse(localStorage.getItem(MK)||'null')||{red:'ATHLÈTE ROUGE',blue:'ATHLÈTE BLEU'},judges=JSON.parse(localStorage.getItem(JK)||'null')||Array.from({length:5},(_,i)=>({name:'Juge '+(i+1),pin:String(i+1)}));
+let s={ra:4,ba:4,rp:[2,2,2],bp:[2,2,2]};const criteria=['1) Rythme & Tempo','2) Vitesse & puissance',"3) Expression de l'énergie"];
+function build(){ $('criteria').innerHTML=criteria.map((t,i)=>`<div class="criterion"><strong>${t}</strong><div class="cols"><div class="athlete red"><div class="choices">${Array.from({length:16},(_,n)=>2-n*.1).map(v=>`<button data-side="r" data-i="${i}" data-v="${v.toFixed(1)}" onclick="pick(this)">${v.toFixed(3)}</button>`).join('')}</div></div><div class="athlete blue"><div class="choices">${Array.from({length:16},(_,n)=>2-n*.1).map(v=>`<button data-side="b" data-i="${i}" data-v="${v.toFixed(1)}" onclick="pick(this)">${v.toFixed(3)}</button>`).join('')}</div></div></div></div>`).join('');render()}
+function pick(e){s[e.dataset.side+'p'][+e.dataset.i]=+e.dataset.v;render()}
+function adjust(k,d){s[k]=Math.max(0,Math.min(4,Math.round((s[k]+d)*10)/10));render()}
+function render(){let rp=s.rp.reduce((a,b)=>a+b,0),bp=s.bp.reduce((a,b)=>a+b,0);$('rA').textContent=s.ra.toFixed(3);$('bA').textContent=s.ba.toFixed(3);$('rP').textContent=rp.toFixed(3);$('bP').textContent=bp.toFixed(3);$('rT').textContent=(s.ra+rp).toFixed(3);$('bT').textContent=(s.ba+bp).toFixed(3);document.querySelectorAll('.choices button').forEach(e=>{let on=s[e.dataset.side+'p'][+e.dataset.i]===+e.dataset.v;e.classList.toggle('selR',on&&e.dataset.side==='r');e.classList.toggle('selB',on&&e.dataset.side==='b')})}
+function resetScores(){s={ra:4,ba:4,rp:[2,2,2],bp:[2,2,2]};render();$('status').textContent='Scores réinitialisés'}
+function saveMatchNames(){match={red:$('redName').value.trim()||'ATHLÈTE ROUGE',blue:$('blueName').value.trim()||'ATHLÈTE BLEU'};localStorage.setItem(MK,JSON.stringify(match));}
+function sendScore(){saveMatchNames();let key=$('judge').value+$('round').value;db[key]={r:+$('rT').textContent,b:+$('bT').textContent,ok:true,redName:match.red,blueName:match.blue,sentAt:new Date().toISOString()};localStorage.setItem(KEY,JSON.stringify(db));$('status').textContent=$('round').value+' sauvegardé. La note précédente est conservée / تم الحفظ دون حذف الجولة السابقة';admin();}
+function buildJudges(){$('judgeCards').innerHTML=judges.map((x,i)=>`<div><b>J${i+1}</b><input id="name${i}" value="${x.name}" aria-label="Nom"><input id="code${i}" value="${x.pin}" maxlength="4" inputmode="numeric" aria-label="Code secret"></div>`).join('')}
+function saveJudges(){judges=judges.map((x,i)=>({name:$('name'+i).value.trim()||'Juge '+(i+1),pin:$('code'+i).value.replace(/\D/g,'').slice(0,4)||String(i+1)}));localStorage.setItem(JK,JSON.stringify(judges));buildJudges();admin()}
+function join(){let i=+$('joinJ').value.slice(1)-1;$('joinStatus').textContent=judges[i].pin===$('pin').value?'Connexion de démonstration acceptée : '+judges[i].name:'Nom ou code incorrect'}
+function avg(round,side){let a=[];for(let i=1;i<=5;i++){let x=db['J'+i+round];if(!x||!x.ok)return null;a.push(x[side])}a.sort((x,y)=>x-y);return(a[1]+a[2]+a[3])/3}
+function admin(){let latest=Object.values(db).find(x=>x&&x.redName);$('adminRedName').textContent='🔴 '+(latest?.redName||match.red);$('adminBlueName').textContent='🔵 '+(latest?.blueName||match.blue);let out='';for(let i=1;i<=5;i++)for(let p of ['P1','P2']){let x=db['J'+i+p];out+=`<tr><td>${judges[i-1].name}</td><td>${p}</td><td>${x?x.r.toFixed(3):'—'}</td><td>${x?x.b.toFixed(3):'—'}</td><td>${x?'Reçue':'Attente'}</td></tr>`}$('rows').innerHTML=out;let r1=avg('P1','r'),r2=avg('P2','r'),b1=avg('P1','b'),b2=avg('P2','b'),ok=[r1,r2,b1,b2].every(x=>x!==null);$('fR').textContent=ok?(r1+r2).toFixed(3):'—';$('fB').textContent=ok?(b1+b2).toFixed(3):'—';$('winner').textContent=ok?(+$('fR').textContent>+$('fB').textContent?'🏆 VAINQUEUR : '+match.red:+$('fR').textContent<+$('fB').textContent?'🏆 VAINQUEUR : '+match.blue:'ÉGALITÉ'):'En attente des 10 notes validées (5 juges × 2 poomsae). Pour chaque poomsae, suppression de la note la plus haute et de la note la plus basse, puis moyenne des 3 restantes.'}
+$('redName').value=match.red;$('blueName').value=match.blue;$('redName').addEventListener('change',saveMatchNames);$('blueName').addEventListener('change',saveMatchNames);$('mode').onchange=()=>{let a=$('mode').value==='admin';$('judgeView').classList.toggle('hide',a);$('adminView').classList.toggle('hide',!a);$('judge').disabled=a;if(a){buildJudges();admin()}};$('judge').onchange=resetScores;$('round').onchange=resetScores;build();
+</script></body></html>
